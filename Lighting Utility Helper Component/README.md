@@ -37,7 +37,7 @@ Extend UtilityServerCall Component to use
 
 Example
 
-	<pre> 
+	
 	<aura:component extends="c:UtilityValidation" >
   	</aura:component>`
 
@@ -47,7 +47,7 @@ Example
         
 		}
 	})
-	</pre>
+	
 
 
 
