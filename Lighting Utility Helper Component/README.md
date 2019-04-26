@@ -36,17 +36,18 @@ Extend UtilityServerCall Component to use
 
 
 Example
-cmp
+
+	<pre> 
 	<aura:component extends="c:UtilityValidation" >
-  
-	</aura:component>
-helper
-({
-	helperMethod : function(component, event, helper) {
-		let text=this.validateField('hi','text')
+  	</aura:component>`
+
+	({
+		helperMethod : function(component, event, helper) {
+			let text=this.validateField('hi','text')
         
-	}
-})
+		}
+	})
+	</pre>
 
 
 
