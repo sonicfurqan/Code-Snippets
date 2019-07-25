@@ -1,23 +1,71 @@
 ({
     
-    "callServer":function(component, serverMethod, params) {
-        return new Promise(function(resolve, reject) { 
-            let action = component.get(serverMethod);
-            if (params) {               
-                action.setParams(params);
-            }
-            action.setCallback(this, function(response) {
-                let state = response.getState();                               
-                if (state === "SUCCESS") { 
-                    resolve(response.getReturnValue());
-                } 
-                else if (state === "ERROR"){
-                    let errors = response.getError();
-                    reject(errors);
-                }
-            });  
-            $A.enqueueAction(action);
-        });
+    "callServer":function(component, actionParams, actionName, successCallback, errorCallback) {
+        var action = component.get(actionName);
+        if(actionParams){
+            action.setParams(actionParams);
+        }
+		var self = this;
+		action.setCallback(self,function(a) {
+			try {
+				if (a.getState() !== 'SUCCESS') {
+                    if(a.getState() === 'ERROR'){
+                        var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    throw {'message' :errors[0].message};
+                                }
+                            }
+                     }
+                     throw {'message' : 'An error occurred during Apex call.'};
+				}
+				
+				var result = a.getReturnValue();
+				
+				if (result.state !== 'SUCCESS') {
+					
+					var errorEncountered;
+					if (!$A.util.isUndefinedOrNull(result.errors)) {
+						errorEncountered = result.errors[0].message;
+					} else {
+						if (!$A.util.isUndefinedOrNull(result.error)) {
+							errorEncountered = result.error;
+						}
+					}
+					throw {
+						'message' : 'An error occurred in the apex call',
+						'extendedMessage' : errorEncountered
+					};
+				}
+				
+				var returnValue = undefined;
+				if (!$A.util.isEmpty(result.jsonResponse)) {
+					
+					returnValue = JSON.parse(result.jsonResponse);
+				}
+				
+				
+				var concreteComponent = component.getConcreteComponent();
+				successCallback(concreteComponent,returnValue, self);
+			} catch(ex) {
+				
+				var errorTitle = "An error occurred";
+				var errorMessage = ex.message;
+				
+				
+				if (!$A.util.isEmpty(ex.extendedMessage)) {
+					errorMessage = ex.extendedMessage;
+				}
+				
+				if ($A.util.isEmpty(errorCallback)) {
+					self.handleError(component, errorTitle, errorMessage);
+				} else {
+					errorCallback(component, errorTitle, errorMessage);
+				}
+			}
+		});
+		
+		$A.enqueueAction(action);
     },
     "getUrlParameterByName":function(parameterName) {
         let url = window.location.href;
