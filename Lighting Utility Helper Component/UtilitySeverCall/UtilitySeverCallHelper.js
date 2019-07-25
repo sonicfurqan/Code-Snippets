@@ -56,12 +56,7 @@
 				if (!$A.util.isEmpty(ex.extendedMessage)) {
 					errorMessage = ex.extendedMessage;
 				}
-				
-				if ($A.util.isEmpty(errorCallback)) {
-					self.handleError(component, errorTitle, errorMessage);
-				} else {
-					errorCallback(component, errorTitle, errorMessage);
-				}
+				errorCallback(component, errorTitle, errorMessage);
 			}
 		});
 		
