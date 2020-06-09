@@ -11,21 +11,21 @@ export default class getObjDetails extends LightningElement {
     @api objApiName;
 
     @wire(getObjectInfo, { objectApiName: '$objApiName' })
-    objectInfoData({error,data}){
-        if(error){
-            let errorObj=JSON.parse(JSON.stringify(error));
+    objectInfoData({ error, data }) {
+        if (error) {
+            let errorObj = JSON.parse(JSON.stringify(error));
             console.log(errorObj);
         }
-        if(data){
+        if (data) {
             //on retriving data creating a custom event to send data
             const objectDataEvent = new CustomEvent('objectDataRecive', {
-                detail: { objData:data },
+                detail: { objData: data },
             });
             this.dispatchEvent(objectDataEvent);
 
-            
+
         }
     }
-    
+
 }
 

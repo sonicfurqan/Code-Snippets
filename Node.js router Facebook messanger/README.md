@@ -16,7 +16,7 @@ in this method, rest post call is sent to https://graph.facebook.com/v2.6/me/mes
 usually used JSON structure is defined in following methods
 //normal text reply
 creates on()
-      
+```json
       {
         "recipient": {
           "id": sender_psid
@@ -24,9 +24,12 @@ creates on()
         "message": {
         "text" : <reply text>
         }
+```
 //text with buttons of postback type
+```javascript
 createButtonJson()
-       
+```
+ ```json      
      {
               "recipient":{
             "id":sender_psid
@@ -48,9 +51,12 @@ createButtonJson()
                 }
               }
         }
+```
 //text with url buttons 
+```javascript
 createUrlButtonJson()
-
+```
+```json
     "recipient":{
             "id":sender_psid
               },
@@ -71,4 +77,4 @@ createUrlButtonJson()
                 }
               }
         }
-
+```

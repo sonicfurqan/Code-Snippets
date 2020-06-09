@@ -57,5 +57,31 @@ public class SDescribeUtility{
         }
         return picklistValues;
     }
+
+    public static string getRecordTypeName(Final String recordTypeId,Final String objectAPIName){
+        Schema.DescribeSObjectResult sobjectResult = Schema.getGlobalDescribe().get(objectAPIName).getDescribe();
+        if(sobjectResult!=null){
+            List<Schema.RecordTypeInfo> recordTypeInfo = sobjectResult.getRecordTypeInfos();
+            for(Schema.RecordTypeInfo info : recordTypeInfo){
+                if(info.getRecordTypeId()==recordTypeId){
+                    return info.getDeveloperName();
+                }
+            }    
+        }
+        return '';
+    }
+   
+    public static string getRecordTypeId(Final String recordTypeDevName,Final String objectAPIName){
+        Schema.DescribeSObjectResult sobjectResult = Schema.getGlobalDescribe().get(objectAPIName).getDescribe();
+        if(sobjectResult!=null){
+            List<Schema.RecordTypeInfo> recordTypeInfo = sobjectResult.getRecordTypeInfos();
+            for(Schema.RecordTypeInfo info : recordTypeInfo){
+                if(info.getDeveloperName()==recordTypeDevName){
+                    return info.getRecordTypeId();
+                }
+            }    
+        }
+        return '';
+    }
     
 }

@@ -13,7 +13,7 @@
             component.set('v.displayAccountList', dislaydata);
         }
         else {
-            
+
             component.set('v.displayAccountList');
             component.set('v.currentPage', '0');
             component.set('v.numOfPages', '0');

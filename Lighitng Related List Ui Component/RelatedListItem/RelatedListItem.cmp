@@ -1,0 +1,78 @@
+<aura:component>
+    <aura:registerEvent name="RelatedList_openRecord" type="c:RelatedListEvent"
+        description="Fires an event when the record  is clicked" />
+
+    <aura:attribute name="recordList" type="List" />
+    <aura:attribute name="viewLength" type="string" />
+    <aura:attribute name="tileclass" type="string" default="" />
+    <aura:attribute name="inlineDetals" type="boolean" default="false" />
+    <aura:attribute name="sobjectName" type="string" default="" />
+
+
+    <aura:iteration items="{!v.recordList}" end="viewLength" var="record">
+        <article
+            class="{! join(' ','slds-media slds-p-horizontal_medium slds-p-vertical_xx-small  slds-tile',v.tileclass)}">
+            <aura:if isTrue="{!record.icon}">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" title="{!record.icon}">
+                        <lightning:icon iconName="{!record.icon}" alternativeText="{!record.icon}"
+                            title="{!record.icon}" />
+                    </span>
+                </div>
+            </aura:if>
+            <div class="slds-media__body">
+                <h3 class="slds-m-bottom_xxx-small slds-tile__title slds-truncate" onclick="{!c.openRecord}"
+                    id="{!record.Id}" title="{!record.Name}">
+                    <a href="'/'+record.Id:'/lightning/r/' + v.sobjectName + '/' + record.Id + '/view'"
+                        class="dotted-underline">{!record.header}</a>
+                </h3>
+                <div class="slds-tile__detail">
+                    <aura:if isTrue="{!!v.inlineDetals}">
+                        <dl class="slds-list_horizontal slds-wrap">
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                title="{!record.field1Label}">{!record.field1Label}</dt>
+                            <dd class="slds-item_detail slds-truncate" title="{!record.field1Value}">
+                                {!record.field1Value}</dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                title="{!record.field2Label}">{!record.field2Label}</dt>
+                            <dd class="slds-item_detail slds-truncate" title="{!record.field2Value}">
+                                {!record.field2Value}</dd>
+                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                title="{!record.field3Label}">{!record.field3Label}</dt>
+                            <dd class="slds-item_detail slds-truncate" title="{!record.field3Value}">
+                                {!record.field3Value}</dd>
+                            <aura:if isTrue="{!!empty(record.field4Label)}">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                    title="{!record.field4Label}">{!record.field4Label}</dt>
+                                <dd class="slds-item_detail slds-truncate" title="{!record.field4Value}">
+                                    {!record.field4Value}</dd>
+                            </aura:if>
+                        </dl>
+                    </aura:if>
+                    <aura:if isTrue="{!v.inlineDetals}">
+                        <p class="slds-m-around--none  slds-text-body--small slds-truncate">
+                            <span>
+                                {!record.field1Value}
+                            </span>
+                            <span>
+                                &nbsp;{!record.field2Value}&nbsp;
+                            </span>
+                            <span>
+                                {!record.field3Value}
+                            </span>
+                            <aura:if isTrue="{!!empty(record.field4Label)}">
+                                <span>
+                                    {!record.field4Label}
+                                </span>
+                            </aura:if>
+                        </p>
+                    </aura:if>
+                </div>
+
+
+            </div>
+        </article>
+    </aura:iteration>
+
+
+</aura:component>

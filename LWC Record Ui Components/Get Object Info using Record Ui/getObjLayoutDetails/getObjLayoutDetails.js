@@ -12,20 +12,20 @@ export default class getObjLayoutDetails extends LightningElement {
     @api objRecordId;
     //layout mode Edit/View
     @api layoutMode;
-    @wire(getRecordUi, { recordIds: '$objRecordId', layoutTypes: 'Full', modes: '$layoutMode'  })
+    @wire(getRecordUi, { recordIds: '$objRecordId', layoutTypes: 'Full', modes: '$layoutMode' })
     recordInfoData({ error, data }) {
-        if(error){
-            let errorObj=JSON.parse(JSON.stringify(error));
+        if (error) {
+            let errorObj = JSON.parse(JSON.stringify(error));
             console.log(errorObj);
         }
-        if(data){
+        if (data) {
             //on retriving data creating a custom event to send data
             const layoutDataEvent = new CustomEvent('layoutDataRecive', {
-                detail: { layoutData:data },
+                detail: { layoutData: data },
             });
             this.dispatchEvent(layoutDataEvent);
         }
     }
-    
+
 }
 

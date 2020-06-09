@@ -1,18 +1,19 @@
-<aura:component >
-    <aura:attribute name="accountObjDetails" type="Object"/>
-    <aura:attribute name="pickListDetails" type="Object[]"/>
+<aura:component>
+    <aura:attribute name="accountObjDetails" type="Object" />
+    <aura:attribute name="pickListDetails" type="Object[]" />
     <!--LWC component returning obj details-->
     <c:getObjDetails objApiName="Account" onobjectDataRecive="{!c.handleObjDetails}"></c:getObjDetails>
-	recordTypeId:{!v.accountObjDetails.defaultRecordTypeId}
+    recordTypeId:{!v.accountObjDetails.defaultRecordTypeId}
     <!--LWC component returning picklist details-->
-    <c:getObjPicklistDetails objApiName="Account" objRecordTypeId="{!v.accountObjDetails.defaultRecordTypeId}" onpicklistDataRecive="{!c.handlePicklistData}"></c:getObjPicklistDetails>
+    <c:getObjPicklistDetails objApiName="Account" objRecordTypeId="{!v.accountObjDetails.defaultRecordTypeId}"
+        onpicklistDataRecive="{!c.handlePicklistData}"></c:getObjPicklistDetails>
 
 
-    
-    <lightning:select   label="Industry" >
+
+    <lightning:select label="Industry">
         <aura:iteration items="{!v.pickListDetails}" var="picklist">
             <option value="{!picklist.value}">{!picklist.label}</option>
         </aura:iteration>
     </lightning:select>
-    
+
 </aura:component>

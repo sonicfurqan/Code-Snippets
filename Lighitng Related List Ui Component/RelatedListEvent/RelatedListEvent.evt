@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Events From RelatedList Component">
+    <aura:attribute type="object" name="data" />
+</aura:event>

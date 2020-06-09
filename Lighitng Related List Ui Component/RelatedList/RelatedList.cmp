@@ -1,0 +1,97 @@
+<aura:component>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+    <aura:registerEvent name="RelatedList_viewAll" type="c:RelatedListEvent"
+        description="Fires an event when the view all is clicked" />
+    <aura:registerEvent name="RelatedList_menuAction" type="c:RelatedListEvent"
+        description="Fires an event when the menu action is clicked" />
+
+    <!-- ui attributes-->
+    <aura:attribute name="isMobile" type="boolean" default="false" access="private" />
+    <aura:attribute name="isLoading" type="boolean" default="false" />
+    <aura:attribute name="inlineDetals" type="boolean" default="false" />
+
+    <!--data attribute-->
+    <aura:attribute name="icon" type="string" />
+    <aura:attribute name="header" type="string" />
+    <aura:attribute name="recordViewList" type="List" />
+    <aura:attribute name="recordActions" type="List" />
+    <aura:attribute name="sobjectName" type="string" default="" />
+
+
+    <!--mobile view-->
+    <aura:if isTrue="{!v.isMobile}">
+        <article class="slds-card_boundary">
+            <div class="slds-grid slds-card page-header-mobile page-header-size">
+                <header class="slds-media slds-media--center slds-has-flexi-truncate" onclick="{!c.viewAll}">
+                    <div class="slds-media__figure stencil slds-avatar slds-avatar_small">
+                        <lightning:icon iconName="{!v.icon}" size="small" />
+                    </div>
+                    <div class="slds-media__body slds-card__header-title">
+                        <h2>
+                            <span lass="slds-card__header-title slds-truncate slds-m-right--xx-small"
+                                title="{!v.header}">
+                                {!v.header}
+                            </span>
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-no-flex">
+                    <lightning:buttonIcon iconName="utility:chevronright" variant="container"
+                        alternativeText="{!$Label.c.View_All_Text}" title="{!$Label.c.View_All_Text}"
+                        onclick="{!c.viewAll}" />
+                </div>
+            </div>
+        </article>
+    </aura:if>
+    <!--desktop view-->
+    <aura:if isTrue="{!!v.isMobile}">
+        <article class="slds-card_boundary">
+            <div class="slds-grid slds-page-header page-header-size">
+                <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure stencil slds-avatar slds-avatar_small">
+                        <lightning:icon iconName="{!v.icon}" size="small" />
+                    </div>
+                    <div class="slds-media__body slds-card__header-title">
+                        <h2>
+                            <span lass="slds-card__header-title slds-truncate slds-m-right--xx-small"
+                                title="{!v.header}">
+                                {!v.header}
+                            </span>
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-no-flex">
+                    <aura:if isTrue="{!v.recordActions.length>0}">
+                        <lightning:buttonMenu onselect="{!c.handleSelect}" menuAlignment="auto" iconSize="small"
+                            alternativeText="Show one or more actions" variant="border-filled">
+                            <aura:iteration items="{!v.recordActions}" var="action">
+                                <lightning:menuItem value="{!action.value}" label="{!action.name}" />
+                            </aura:iteration>
+                        </lightning:buttonMenu>
+                    </aura:if>
+                </div>
+            </div>
+            <div class="slds-card slds-scrollable_y set-max-height">
+                <div class="slds-is-relative">
+                    <aura:if isTrue="{! v.isLoading }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                </div>
+                <!--UI Tiles View-->
+                <c:RelatedListItem sobjectName="{!v.sobjectName}" recordList="{!v.recordViewList}"
+                    inlineDetals="{!v.inlineDetals}" viewLength="3"></c:RelatedListItem>
+            </div>
+            <aura:if isTrue="{!v.recordViewList.length>0}">
+                <footer class="slds-card__footer">
+                    <a class="slds-card__footer-action" href="javascript:void(0);" onclick="{!c.viewAll}">
+                        {!$Label.c.View_All_Text}
+                        <span class="slds-assistive-text">{!$Label.c.View_All_Text}</span>
+                    </a>
+                </footer>
+            </aura:if>
+        </article>
+    </aura:if>
+
+</aura:component>

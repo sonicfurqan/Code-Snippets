@@ -12,21 +12,21 @@ export default class getObjPicklistDetails extends LightningElement {
     //object recordType id
     @api objRecordTypeId;
     @wire(getPicklistValuesByRecordType, { objectApiName: '$objApiName', recordTypeId: '$objRecordTypeId' })
-    picklistInfoData({error,data}){
-        if(error){
-            let errorObj=JSON.parse(JSON.stringify(error));
+    picklistInfoData({ error, data }) {
+        if (error) {
+            let errorObj = JSON.parse(JSON.stringify(error));
             console.log(errorObj);
         }
-        if(data){
+        if (data) {
             //on retriving data creating a custom event to send data
             const pickListDataEvent = new CustomEvent('picklistDataRecive', {
-                detail: { picklistData:data },
+                detail: { picklistData: data },
             });
             this.dispatchEvent(pickListDataEvent);
 
-            
+
         }
     }
-    
+
 }
 

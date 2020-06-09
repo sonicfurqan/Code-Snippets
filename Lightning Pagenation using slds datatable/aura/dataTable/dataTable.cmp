@@ -1,35 +1,36 @@
-<aura:component controller="dataTable" >
-    <aura:handler name='init' value='{!this}' action='{!c.onInit}'  />
+<aura:component controller="dataTable">
+    <aura:handler name='init' value='{!this}' action='{!c.onInit}' />
 
-    <aura:attribute name="searchKey" type="String"/>
-    
-    <aura:attribute name="allAccount" type="Object[]"/>
+    <aura:attribute name="searchKey" type="String" />
 
-    <aura:attribute name="displayAllAccountList" type="Object[]"/>
-    <aura:attribute name="displayAccountList" type="Object[]"/>
+    <aura:attribute name="allAccount" type="Object[]" />
 
-    <aura:attribute name="currentPage" type="String"/>
-    <aura:attribute name="numOfPages" type="String"/>
-    
-    
-    <aura:attribute name='loading' type='Boolean' default="false"/> 
+    <aura:attribute name="displayAllAccountList" type="Object[]" />
+    <aura:attribute name="displayAccountList" type="Object[]" />
 
-    <aura:attribute name='firstDisable' type='Boolean' default="false"/> 
-    <aura:attribute name='prevDisable' type='Boolean' default="false"/>
-    <aura:attribute name='nextDisable' type='Boolean' default="false"/>
-    <aura:attribute name='lastDisable' type='Boolean' default="false"/>
+    <aura:attribute name="currentPage" type="String" />
+    <aura:attribute name="numOfPages" type="String" />
+
+
+    <aura:attribute name='loading' type='Boolean' default="false" />
+
+    <aura:attribute name='firstDisable' type='Boolean' default="false" />
+    <aura:attribute name='prevDisable' type='Boolean' default="false" />
+    <aura:attribute name='nextDisable' type='Boolean' default="false" />
+    <aura:attribute name='lastDisable' type='Boolean' default="false" />
 
 
     <aura:attribute name="columns" type="List" default="[{label: 'Name', fieldName: 'Name', type: 'text'},
     {label: 'Phone', fieldName: 'Phone', type: 'text'},
     {label: 'last Modified Date', fieldName: 'lastModifiedDate', type: 'date'},
     {label: 'Type', fieldName: 'Type', type: 'text'},
-    ]"/>
+    ]" />
 
-    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading" aria-modal="true" aria-describedby="modal-content">
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large"
+        aria-labelledby="modal-heading" aria-modal="true" aria-describedby="modal-content">
         <div class="slds-modal__container">
             <header class="slds-modal__header">
-                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" >
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
                     X
                     <span class="slds-assistive-text">Close</span>
                 </button>
@@ -37,60 +38,65 @@
                     All Accounts
                 </h2>
                 <p class="slds-m-top_x-small">
-                    <lightning:input value="{!v.searchKey}" name="enter-search" type="search" onchange="{!c.searchlist}"/>
+                    <lightning:input value="{!v.searchKey}" name="enter-search" type="search"
+                        onchange="{!c.searchlist}" />
                 </p>
             </header>
             <div class="slds-modal__content slds-p-around_medium" id="modal-content">
-               
-                        
-                        <div class="slds-scrollable" style="height:80%;" >
-                            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-max-medium-table_stacked-horizontal slds-table_cell-buffer">
-                                <thead>
-                                    <th class="slds-text-title_caps" scope="col">
-                                        <div class="slds-truncate" title="Select"/>
-                                    </th>
-                                    <aura:iteration items="{!v.columns }" var="coloumName">
-                                        <th class="slds-text-title_caps" scope="col">
-                                            <div class="slds-truncate" title="{!coloumName.label}">
-                                                {!coloumName.label}
-                                            </div>
-                                        </th>
-                                    </aura:iteration>
-                                </thead>
-                                <tbody>
-                                    <aura:iteration items="{! v.displayAccountList }" var="rData">
-                                        <tr class="slds-hint-parent">
-                                            <td data-label="Select">
-                                                <div class="slds-truncate"  style="max-width: 30rem;" title="{!rData.value}">
-                                                     <lightning:input disabled="{!v.loading}" type="checkbox" name="{!rData.id}" value="{!rData.Name}" onchange="{!c.accountSelect}"/>
-                                                </div>
-                                            </td>
-                                            <td data-label="NAME">
-                                                <div class="slds-truncate"  style="max-width: 30rem;" title="{!rData.value}">
-                                                    {!rData.Name}
-                                                </div>
-                                            </td>
-                                            <td data-label="LAST MODIFIED BY">
-                                                <div class="slds-truncate"  style="max-width: 30rem;" title="{!rData.lastModifiedByName}">
-                                                    {!rData.Phone}
-                                                </div>
-                                            </td>
-                                            <td data-label="LAST MODIFIED DATE">
-                                                <div class="slds-truncate"  style="max-width: 30rem;" title="{!rData.lastModifiedDate}">
-                                                    {!rData.Type}
-                                                </div>
-                                            </td>
-                                            
-                                            
-                                        </tr>
-                                    </aura:iteration>
-                                </tbody>
-                            </table>
-                        </div>
-                
+
+
+                <div class="slds-scrollable" style="height:80%;">
+                    <table
+                        class="slds-table slds-table_bordered slds-table_col-bordered slds-max-medium-table_stacked-horizontal slds-table_cell-buffer">
+                        <thead>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Select" />
+                            </th>
+                            <aura:iteration items="{!v.columns }" var="coloumName">
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="{!coloumName.label}">
+                                        {!coloumName.label}
+                                    </div>
+                                </th>
+                            </aura:iteration>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{! v.displayAccountList }" var="rData">
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Select">
+                                        <div class="slds-truncate" style="max-width: 30rem;" title="{!rData.value}">
+                                            <lightning:input disabled="{!v.loading}" type="checkbox" name="{!rData.id}"
+                                                value="{!rData.Name}" onchange="{!c.accountSelect}" />
+                                        </div>
+                                    </td>
+                                    <td data-label="NAME">
+                                        <div class="slds-truncate" style="max-width: 30rem;" title="{!rData.value}">
+                                            {!rData.Name}
+                                        </div>
+                                    </td>
+                                    <td data-label="LAST MODIFIED BY">
+                                        <div class="slds-truncate" style="max-width: 30rem;"
+                                            title="{!rData.lastModifiedByName}">
+                                            {!rData.Phone}
+                                        </div>
+                                    </td>
+                                    <td data-label="LAST MODIFIED DATE">
+                                        <div class="slds-truncate" style="max-width: 30rem;"
+                                            title="{!rData.lastModifiedDate}">
+                                            {!rData.Type}
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             <footer class="slds-modal__footer">
-                
+
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col slds-text-align_left">
                         <span>
@@ -99,24 +105,29 @@
                     </div>
                     <div class="slds-col slds-text-align_center">
                         <span>
-                            <lightning:button variant="base" label="First" title="First" name="First" onclick="{! c.navigateToPage }" disabled="{!v.firstDisable}"/>
-                            <lightning:button variant="base"  label="Prev" title="Prev" name="Prev" onclick="{! c.navigateToPage }" disabled="{!v.prevDisable}"/>
-                            <span class="slds-badge_lightest slds-m-left_x-small slds-m-right_x-small">{!v.currentPage}</span>
-                            <lightning:button variant="base"  label="Next" title="Next" name="Next"  onclick="{! c.navigateToPage }" disabled="{!v.nextDisable}"/>
-                            <lightning:button variant="base" label="Last" title="Last" name="Last" onclick="{! c.navigateToPage }" disabled="{!v.lastDisable}"/>
+                            <lightning:button variant="base" label="First" title="First" name="First"
+                                onclick="{! c.navigateToPage }" disabled="{!v.firstDisable}" />
+                            <lightning:button variant="base" label="Prev" title="Prev" name="Prev"
+                                onclick="{! c.navigateToPage }" disabled="{!v.prevDisable}" />
+                            <span
+                                class="slds-badge_lightest slds-m-left_x-small slds-m-right_x-small">{!v.currentPage}</span>
+                            <lightning:button variant="base" label="Next" title="Next" name="Next"
+                                onclick="{! c.navigateToPage }" disabled="{!v.nextDisable}" />
+                            <lightning:button variant="base" label="Last" title="Last" name="Last"
+                                onclick="{! c.navigateToPage }" disabled="{!v.lastDisable}" />
                         </span>
                     </div>
                     <div class="slds-col slds-text-align_right">
                         <span>
-                            <button class="slds-button slds-button_neutral" disabled="{!v.loading}" >Cancel</button>
-                            <button class="slds-button slds-button_brand" disabled="{!v.loading}" >Commit</button>
-                            
+                            <button class="slds-button slds-button_neutral" disabled="{!v.loading}">Cancel</button>
+                            <button class="slds-button slds-button_brand" disabled="{!v.loading}">Commit</button>
+
                         </span>
                     </div>
                 </div>
-                
+
             </footer>
         </div>
     </section>
 
-</aura:component>	
+</aura:component>

@@ -40,7 +40,7 @@
         eventLocationObj.weekDay = days[w];
         eventLocationObj.sortDate = day + '/' + (month + 1) + '/' + year;
     },
-    "createDynamic": function (component, componentName, attributes, bodyAttribute) {
+    "createDynamicComponent": function (component, componentName, attributes, bodyAttribute) {
         $A.createComponent
             (
                 componentName,
