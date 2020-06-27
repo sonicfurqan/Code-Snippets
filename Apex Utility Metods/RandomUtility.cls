@@ -22,4 +22,11 @@ public class RandomUtility{
         return result;
     }
 
+    public static String uniqueRandomHash(){
+        String hashString = '1000' + String.valueOf(Datetime.now().formatGMT('yyyy-MM-dd HH:mm:ss.SSS'));
+        Blob hash = Crypto.generateDigest('MD5', Blob.valueOf(hashString));
+        String hexDigest = EncodingUtil.convertToHex(hash);
+        return hexDigest;
+    }
+
 }
