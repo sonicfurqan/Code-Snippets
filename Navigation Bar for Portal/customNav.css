@@ -1,0 +1,31 @@
+.THIS .container {
+    min-height:32px;
+    color:var(--lwc-brandNavigationColorText,#FFFFFF);
+    background-color: var(--lwc-brandNavigationBarBackgroundColor,#1E2443);
+}
+
+.THIS .naviagation-bar{
+	max-width: var(--lwc-prmPageMaxWidth,1140px);
+}
+
+.THIS .navigation-bar-item{
+	padding: var(--lwc-spacingMedium, 1rem) var(--lwc-spacingLarge, 1.5rem);
+}
+.THIS .navigation-bar-item:hover{
+	background-color: var(--navigationBarItemBackgroundColorHover,rgba(255,255,255,.2))
+}
+.THIS .nav-icon svg{
+    fill:white;
+}
+
+.THIS .navigation-bar-child-menu{
+    z-index: var(--lwc-zIndexDropdown, 7000);
+    background-color:var(--lwc-brandNavigationBackgroundColor, #1E2443);
+    min-width: 100%;
+    border-radius: var(--lwc-borderRadiusSmall, 0.125rem);
+    box-shadow: var(--lwc-shadowHeader, 0 2px 4px rgba(0, 0, 0, 0.07));
+	
+}
+.THIS .navigation-bar-child-item{
+    border-bottom: 1px rgba(255,255,255,.2) solid;                                                                  
+}
